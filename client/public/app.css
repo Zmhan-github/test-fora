@@ -1,0 +1,71 @@
+.app {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  height: 100vh;
+  font-size: 16px;
+}
+
+.nav {
+  flex-basis: 20%;
+}
+
+.messages-container {
+  flex-basis: 80%;
+  margin-bottom: 0;
+  height: 100vh;
+}
+
+.support, .users {
+  height: 50vh;
+  margin-bottom: 0;
+}
+
+.rooms, .users, .messages {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.rooms, .users {
+  height: 88%;
+}
+
+.messages {
+  height: 94%;
+}
+
+.rooms > ul, .messages > ul, .users > ul {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.message {
+  /* display: flex; */
+}
+.message > .author {
+  flex-basis: 100%;
+}
+.message > .body {
+  flex-basis: 100%;
+}
+.active {
+  background-color: #e8e8e8;
+}
+.timestamp {
+  color: #808080;
+  font-style: italic;
+  padding-left: 13px;
+}
+.room {
+  padding: 0 4px;
+}
+.form-group {
+  margin-bottom: 0;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+a {
+  cursor: pointer;
+}
