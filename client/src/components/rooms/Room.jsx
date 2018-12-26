@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
 
 class Room extends Component {
   onClick(e) {
     e.preventDefault()
     const { setRoom, room } = this.props
     setRoom(room)
+    this.props.history.push(`/room/${room.id}`)
   }
   render() {
     const { room, activeRoom } = this.props
@@ -24,4 +26,4 @@ Room.propTypes = {
   activeRoom: PropTypes.object.isRequired
 };
 
-export default Room
+export default withRouter(Room)

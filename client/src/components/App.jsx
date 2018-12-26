@@ -17,11 +17,28 @@ class App extends Component {
   }
 
   componentDidMount() {
-    let socket = this.socket = io('http://localhost:3000/')
+    let socket = this.socket = io('http://localhost:3006/')
     socket.on('connect', this.onConnect.bind(this))
     socket.on('disconnect', this.onDisconnect.bind(this))
     socket.on('room add', this.onAddRoom.bind(this))
+    socket.on('rooms all', this.onShowAllRooms.bind(this))
     socket.on('message add', this.onMessageAdd.bind(this))
+  }
+  onShowAllRooms(roomsServer) {
+
+    let { rooms } = this.state
+    let { roomId } = this.props
+    rooms = roomsServer
+    this.setState({ rooms })
+
+    if (roomsServer.length < 1) {
+      return;
+    } else {
+      if (roomId) {
+        let activeRoomArray = roomsServer.filter(room => room.id === roomId)
+        this.setRoom(activeRoomArray[0])
+      }
+    }
   }
   onMessageAdd(message) {
     let { messages } = this.state
@@ -43,12 +60,21 @@ class App extends Component {
   }
 
   addRoom(name) { // TODO: send to server
-    let { rooms } = this.state
-    this.socket.emit('room add', { id: rooms.length, name })
+    this.socket.emit('room add', { name })
   }
 
   setRoom(activeRoom) {
+    // Todo: messages filter id
+    this.setState({ messages: [] })
     this.setState({ activeRoom })
+    
+    this.socket.emit('join room', { room: activeRoom.id })
+  }
+
+  setUserName(name) {
+    let { users } = this.state
+    users.push({ id: users.length, name})
+    this.setState({ users })
   }
 
   addMessage(body) {
@@ -74,7 +100,8 @@ class App extends Component {
               setRoom={this.setRoom.bind(this)}
             />
             <UserSection
-              users={this.state.users}
+              {...this.state}
+              setUserName={this.setUserName.bind(this)}
             />
           </div>
           <MessageSection

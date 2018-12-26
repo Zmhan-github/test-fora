@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import UserList from './UserList'
+import UserForm from './UserForm'
 
 class UserSection extends Component {
   render() {
@@ -12,6 +13,7 @@ class UserSection extends Component {
         </div>
         <div className="panel-body rooms">
           <UserList {...this.props}/>
+          <UserForm {...this.props}/>
         </div>
       </div>
     )
@@ -19,7 +21,8 @@ class UserSection extends Component {
 }
 
 UserSection.propTypes = {
-  users: PropTypes.array.isRequired
+  users: PropTypes.array.isRequired,
+  setUserName: PropTypes.func.isRequired
 }
 
 export default UserSection

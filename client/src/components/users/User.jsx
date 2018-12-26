@@ -6,7 +6,7 @@ class User extends Component {
     const { user } = this.props
     return (
       <li>
-        <a href="/">{ user.name }</a>
+        { user.name }
       </li>
     )
   }
